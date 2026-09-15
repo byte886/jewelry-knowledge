@@ -9,6 +9,7 @@
 4. [BACKLOG.md](./BACKLOG.md) — 拆到 1–4h 的任务台账（从这里领活）。
 5. [DECISIONS.md](./DECISIONS.md) — 关键决策 ADR（为什么这么定）。
 6. [NETDISK_SYNC.md](./NETDISK_SYNC.md) — 百度网盘成品同步：沙箱机制、目录映射、断点、排错。
+7. [MEDIA_ARCHIVE_OPS.md](./MEDIA_ARCHIVE_OPS.md) — 视频原片：为何不转码、漏合流无损修复、类内序号命名、外置介质 rsync 归档与三重校验（ADR-013）。
 
 > AI 代理操作规则与命令速查看根目录 [AGENTS.md](../AGENTS.md)（开工先读）。
 

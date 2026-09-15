@@ -3,10 +3,10 @@
 把 B 站 UP「宝石学家老许」（UID/mid=1841256325，约 24.7 万粉，珠宝科普）的**视频 + 图文 + 推荐书**采集、转写/OCR 后建成本地结构化知识库，作为用户自营 B 站号/视频号的选题与文案弹药库。全程防风控第一。
 
 - **项目位置（实体目录）**：`~/Desktop/gemology-kb`（本地目录名沿用）；**公有 Git 仓**：https://github.com/byte886/jewelry-knowledge ，只版本化"清洗后的知识成品/代码/文档"，原始件与逐字转写只留本地、不入库（ADR-012）。
-- AI 接手先读 [AGENTS.md](AGENTS.md)；工程文档地图见 [docs/README.md](docs/README.md)；网盘见 [docs/NETDISK_SYNC.md](docs/NETDISK_SYNC.md)。
+- AI 接手先读 [AGENTS.md](AGENTS.md)；工程文档地图见 [docs/README.md](docs/README.md)；网盘见 [docs/NETDISK_SYNC.md](docs/NETDISK_SYNC.md)；原片治理与外置归档见 [docs/MEDIA_ARCHIVE_OPS.md](docs/MEDIA_ARCHIVE_OPS.md)。
 
 ## 当前进度
-- **视频线已完成**：投稿 **743** 个（官方 count 为准，总时长 41.2h，跨度 2021-04~2026-09）全部下载（`01_video`，约 13G）并 FunASR 转写（`04_transcript` 743 篇）。
+- **视频线已完成**：投稿 **743** 个（官方 count 为准，总时长 41.2h，跨度 2021-04~2026-09）全部下载（`01_video`，约 13G）并 FunASR 转写（`04_transcript` 743 篇）；原片已按「类内序号_标题_[BV]」规范命名、并原字节冷备到外置盘（ADR-013）。
 - **图文存量盘点完成（M2-0）**：动态流翻到账号起点，动态共 11539 条，其中图文 4367（DRAW 4366 + 专栏 1），清单 `00_manifest/articles_dynamic_scan.json`；正文采集/OCR 为 M2，未动工。
 - **知识层**：`05_knowledge`（OKF v0.2）已建 743 篇视频条目 + topics 占位，共 779 个 md；精修 stable 20/743，其余在 `refine_queue.json` 队列。
 - **外部来源（平台无关，ADR-012）**：`08_sources/<source_id>/` 承接老许之外的任意来源（其他 UP、公众号/视频号/抖音、电子书、第三方报告、付费社区）；首个为 `community-scys`（生财有术珠宝创业情报），清洗为 `concepts/reports/` 下一篇 ReportNote。
@@ -25,7 +25,7 @@
 - 竖屏按"较短边 res"选流（按帧高会误选 360p）；B 站强制直连，走代理必 412。
 
 ## 主要决策（ADR 见 docs/DECISIONS.md）
-- 统一 **720p 原片留存、不压缩**（源已是 HEVC/AV1 约 600kbps，重压仅省 26-35% 却损画质、耗时，磁盘充足；2026-09-11 确认）。
+- **原片不重编码、原样归档**（2026-09-14 三样本多档实测：源码率中位 657kbps，保质量重压反而变大 1.05–3.11×；要变小需 x265 CRF28–32，但 SSIM 掉到 0.91–0.97 损珠宝颜色/火彩/字幕，详见 ADR-013 与 [MEDIA_ARCHIVE_OPS.md](docs/MEDIA_ARCHIVE_OPS.md)，**取代**此前"重压省 26–35%"的估算）。
 - OKF v0.2、本地为源（ADR-001）；仓库**公有但只放清洗后成品、原料与逐字稿不入库**（ADR-012，变更 ADR-003/005 的私有设定）；不引入向量库（ADR-008）；终局是做号弹药库、不做量化（ADR-006）。
 
 ## 目录结构
@@ -35,9 +35,9 @@ gemology-kb/
 ├── docs/                        # PRD/ARCHITECTURE/ROADMAP/BACKLOG/DECISIONS/NETDISK_SYNC
 ├── library/
 │   ├── 00_manifest/             # manifest.json/.csv、refine_queue.json、articles_dynamic_scan.json（台账）
-│   ├── 01_video/<分类>/<标题 [BV]>.mp4     # 原片(不入git)
+│   ├── 01_video/<分类>/<NNN_标题 [BV]>.mp4 # 原片,类内序号命名(不入git;治理/外置归档见 MEDIA_ARCHIVE_OPS)
 │   ├── 02_audio/                # 转写抽取音频(过程件)
-│   ├── 04_transcript/<分类>/<标题 [BV]>/{transcript.md, transcript.json}  # 逐字转写=原料(不进公有Git)
+│   ├── 04_transcript/<分类>/<NNN_标题 [BV]>/{transcript.md, transcript.json}  # 逐字转写=原料(不进公有Git)
 │   ├── 05_knowledge/            # OKF 知识成品(concepts/videos 仅stable、topics、reports、index/log)
 │   ├── 06_articles/ 07_books/   # M2 图文(原料不进公有Git) / M4 书（待建）
 │   ├── 08_sources/<source_id>/  # 平台无关外部源:raw,cleaned(不入库)+SOURCE.md,manifest.json(入库)

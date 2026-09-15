@@ -35,9 +35,9 @@ bili-up/
 ├─ library/
 │  ├─ 00_manifest/           # 台账：manifest.json/csv（743，权威）、refine_queue.json
 │  │  └─ sources.json        # 【新】源清单 + 增量水位（见 §5）
-│  ├─ 01_video/              # 720p 原片 13G（.gitignore，不入库）
+│  ├─ 01_video/              # 原片 13G，类内 NNN_标题_[BV].mp4（.gitignore 不入库；治理/外置归档见 MEDIA_ARCHIVE_OPS、ADR-013）
 │  ├─ 02_audio/
-│  ├─ 04_transcript/         # 视频转写（不可变，已入库）
+│  ├─ 04_transcript/         # 视频逐字转写（原料，不进公有 Git；目录与 01_video 同名 stem）
 │  ├─ 06_articles/           # 【新】图文：<id>/article.md + images/ + ocr/（原料，不进公有Git）
 │  ├─ 07_books/              # 【新】书籍：<isbn或书名>/bookmap.md、notes/、合法源说明
 │  ├─ 08_sources/            # 【新·ADR-012】平台无关外部来源：<source_id>/{raw,cleaned(均不入库),SOURCE.md,manifest.json(入库)}
@@ -52,7 +52,7 @@ bili-up/
 └─ *.py *.sh                 # 流水线脚本（见 §6）
 ```
 
-约定：新增层不改变现有 743 篇路径与 bvid.md 命名；OKF 链接目标仍不得含空格/半角括号，故**条目文件名一律用稳定 ID**（视频 bvid、图文 aid、书籍 ISBN/拼音 slug），人类可读标题放链接文本与正文。
+约定：新增层不改变现有 743 篇路径与 bvid.md 命名；OKF 链接目标仍不得含空格/半角括号，故**条目文件名一律用稳定 ID**（视频 bvid、图文 aid、书籍 ISBN/拼音 slug），人类可读标题放链接文本与正文。注意区分层级：知识条目用稳定 ID，而**原片文件**用 `NNN_标题_[BV].mp4` 类内序号命名（人读排序用），二者不冲突，见 ADR-013。
 
 ## 3. 三类知识条目 schema（OKF 标准档，type 区分）
 
